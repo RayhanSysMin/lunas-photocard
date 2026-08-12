@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
 }
 
 class DNNBPC_Core {
-    const VERSION        = '1.0.7';
+    const VERSION        = '1.0.8';
     const OPT_CORE       = 'dnnbpc_core_v1';
     const OPT_PREFIX     = 'dnnbpc_tpl_opts_v1_';
     const MENU_SLUG      = 'daily-new-nation-bangla-photocard';
@@ -421,8 +421,11 @@ class DNNBPC_Core {
         $words = preg_split('/\s+/u', $raw_title, -1, PREG_SPLIT_NO_EMPTY);
         $word_count = is_array($words) ? count($words) : 0;
         $title_length = function_exists('mb_strlen') ? mb_strlen($raw_title, get_bloginfo('charset') ?: 'UTF-8') : strlen($raw_title);
+        $title_visual_units = $this->get_title_visual_units($raw_title);
         $opts['wc'] = $word_count;
-        $opts['title_bucket'] = $this->get_title_bucket($word_count, $title_length);
+        $opts['title_chars'] = $title_length;
+        $opts['title_units'] = $title_visual_units;
+        $opts['title_bucket'] = $this->get_title_bucket($word_count, $title_length, $title_visual_units);
         $opts['domain'] = $this->get_site_domain();
 
         $tpls = $this->list_templates();
@@ -459,7 +462,49 @@ class DNNBPC_Core {
         return wp_specialchars_decode(html_entity_decode((string) $value, ENT_QUOTES, get_bloginfo('charset')), ENT_QUOTES);
     }
 
-    private function get_title_bucket($word_count, $title_length) {
+    private function get_title_visual_units($title) {
+        $characters = preg_split('//u', trim((string) $title), -1, PREG_SPLIT_NO_EMPTY);
+        if (!is_array($characters)) {
+            return (float) strlen((string) $title);
+        }
+
+        $units = 0.0;
+        foreach ($characters as $character) {
+            if (preg_match('/\p{M}/u', $character)) {
+                continue;
+            }
+
+            if (preg_match('/\s/u', $character)) {
+                $units += 0.45;
+                continue;
+            }
+
+            if (preg_match('/[\'"‘’“”`.,:;!?।\-\(\)\[\]{}]/u', $character)) {
+                $units += 0.25;
+                continue;
+            }
+
+            if (preg_match('/[০-৯0-9]/u', $character)) {
+                $units += 0.72;
+                continue;
+            }
+
+            if (preg_match('/[A-Za-z]/u', $character)) {
+                $units += 0.65;
+                continue;
+            }
+
+            $units += 1.0;
+        }
+
+        return round($units, 2);
+    }
+
+    private function get_title_bucket($word_count, $title_length, $title_visual_units) {
+        if ($word_count <= 5 && $title_visual_units <= 31) {
+            return 'very_short';
+        }
+
         if ($word_count <= 8 && $title_length <= 52) {
             return 'compact';
         }

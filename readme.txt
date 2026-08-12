@@ -4,7 +4,7 @@ Tags: news, elementor, social media, photo card, bangla
 Requires at least: 5.8
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.7
+Stable tag: 1.0.8
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +69,10 @@ No. Fonts and html2canvas are bundled locally.
 
 == Changelog ==
 
+= 1.0.8 =
+* Added visual-unit title calculation for smarter short Bangla headline layout.
+* Improved vertical balance for very short no-shoulder titles so one-line headlines do not sit too close to the image.
+
 = 1.0.7 =
 * Increased Daily New Nation Bangla headline sizing for clearer mobile and desktop viewing.
 * Tuned short, medium, and long title buckets to match the boss-approved large-title sample while keeping CTA spacing intact.
@@ -109,6 +113,9 @@ No. Fonts and html2canvas are bundled locally.
 * Reset plugin metadata, version, and author.
 
 == Upgrade Notice ==
+
+= 1.0.8 =
+Improves centering and balance for very short Daily New Nation Bangla headlines.
 
 = 1.0.7 =
 Bigger Daily New Nation Bangla card headlines for better readability on phones and desktop screens.

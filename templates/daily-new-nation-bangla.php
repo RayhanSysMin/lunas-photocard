@@ -115,6 +115,12 @@ return [
 .jn24-card[data-title-bucket="short"] .jn24-title{
   font-size:74px;line-height:1.16;max-width:960px;text-wrap:wrap;
 }
+.jn24-card[data-title-bucket="very_short"] .jn24-title{
+  font-size:78px;line-height:1.16;font-weight:900;max-width:760px;text-wrap:balance;
+}
+.jn24-card[data-title-bucket="very_short"][data-shoulder=""] .jn24-title{
+  margin-top:38px;
+}
 .jn24-card[data-title-bucket="balanced_short"] .jn24-title{
   font-size:74px;line-height:1.16;font-weight:900;max-width:940px;text-wrap:wrap;
 }

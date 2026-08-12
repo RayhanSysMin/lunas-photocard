@@ -53,7 +53,12 @@ templates/
 
 ## Release
 
-Current version: `1.0.7`
+Current version: `1.0.8`
+
+### 1.0.8
+
+- Added visual-unit title calculation for smarter short Bangla headline layout.
+- Improved vertical balance for very short no-shoulder titles.
 
 ### 1.0.7
 
