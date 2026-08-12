@@ -10,8 +10,9 @@ Author profile: https://github.com/RayhanSysMin
 
 - Browser-side PNG export through bundled html2canvas.
 - Daily New Nation Bangla photo card template.
-- Featured image, post title, date, and editorial shoulder support.
+- Featured image, post title, date, editorial shoulder, and editorial subheading support.
 - Editorial shoulder reads from `_editorial_shoulder`.
+- Editorial subheading reads from `_editorial_subheading`.
 - Bangla or English date rendering.
 - Template options for logo, seal, colors, and CTA text.
 - Shortcode button: `[daily_new_nation_bangla_photocard_button]`.
@@ -53,7 +54,13 @@ templates/
 
 ## Release
 
-Current version: `1.0.8`
+Current version: `1.0.9`
+
+### 1.0.9
+
+- Added editorial subheading support from `_editorial_subheading`.
+- Added smart title/subheading density calculations for balanced Daily New Nation Bangla cards.
+- Added browser-side final fitting to protect CTA spacing.
 
 ### 1.0.8
 

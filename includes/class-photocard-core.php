@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
 }
 
 class DNNBPC_Core {
-    const VERSION        = '1.0.8';
+    const VERSION        = '1.0.9';
     const OPT_CORE       = 'dnnbpc_core_v1';
     const OPT_PREFIX     = 'dnnbpc_tpl_opts_v1_';
     const MENU_SLUG      = 'daily-new-nation-bangla-photocard';
@@ -410,6 +410,8 @@ class DNNBPC_Core {
         $site = $this->decode_text(get_bloginfo('name'));
         $shoulder = get_post_meta($post_id, '_editorial_shoulder', true);
         $shoulder = $this->decode_text(sanitize_text_field(wp_strip_all_tags((string) $shoulder)));
+        $subheading = get_post_meta($post_id, '_editorial_subheading', true);
+        $subheading = $this->decode_text(sanitize_text_field(wp_strip_all_tags((string) $subheading)));
 
         $tpl_key = $this->get_active_template_key();
         $opts = $this->get_template_options($tpl_key);
@@ -418,14 +420,17 @@ class DNNBPC_Core {
         }
 
         $raw_title = trim(wp_strip_all_tags((string) $title));
-        $words = preg_split('/\s+/u', $raw_title, -1, PREG_SPLIT_NO_EMPTY);
-        $word_count = is_array($words) ? count($words) : 0;
-        $title_length = function_exists('mb_strlen') ? mb_strlen($raw_title, get_bloginfo('charset') ?: 'UTF-8') : strlen($raw_title);
-        $title_visual_units = $this->get_title_visual_units($raw_title);
-        $opts['wc'] = $word_count;
-        $opts['title_chars'] = $title_length;
-        $opts['title_units'] = $title_visual_units;
-        $opts['title_bucket'] = $this->get_title_bucket($word_count, $title_length, $title_visual_units);
+        $title_metrics = $this->get_text_metrics($raw_title);
+        $subheading_metrics = $this->get_text_metrics($subheading);
+        $opts['wc'] = $title_metrics['words'];
+        $opts['title_chars'] = $title_metrics['chars'];
+        $opts['title_units'] = $title_metrics['units'];
+        $opts['subheading_wc'] = $subheading_metrics['words'];
+        $opts['subheading_chars'] = $subheading_metrics['chars'];
+        $opts['subheading_units'] = $subheading_metrics['units'];
+        $opts['title_bucket'] = $this->get_title_bucket($title_metrics['words'], $title_metrics['chars'], $title_metrics['units']);
+        $opts['subheading_bucket'] = $this->get_subheading_bucket($subheading_metrics['words'], $subheading_metrics['units']);
+        $opts['copy_density'] = $this->get_copy_density($shoulder !== '', $subheading !== '', $title_metrics, $subheading_metrics);
         $opts['domain'] = $this->get_site_domain();
 
         $tpls = $this->list_templates();
@@ -442,6 +447,7 @@ class DNNBPC_Core {
             'image'    => esc_url_raw($image),
             'site'     => $site,
             'shoulder' => $shoulder,
+            'subheading' => $subheading,
             'tpl'      => $tpl_key,
             'opts'     => $opts,
             'tpl_def'  => $tpl_def,
@@ -462,10 +468,24 @@ class DNNBPC_Core {
         return wp_specialchars_decode(html_entity_decode((string) $value, ENT_QUOTES, get_bloginfo('charset')), ENT_QUOTES);
     }
 
-    private function get_title_visual_units($title) {
-        $characters = preg_split('//u', trim((string) $title), -1, PREG_SPLIT_NO_EMPTY);
+    private function get_text_metrics($text) {
+        $raw_text = trim(wp_strip_all_tags((string) $text));
+        $words = preg_split('/\s+/u', $raw_text, -1, PREG_SPLIT_NO_EMPTY);
+        $word_count = is_array($words) ? count($words) : 0;
+        $charset = get_bloginfo('charset') ?: 'UTF-8';
+        $char_count = function_exists('mb_strlen') ? mb_strlen($raw_text, $charset) : strlen($raw_text);
+
+        return [
+            'words' => $word_count,
+            'chars' => $char_count,
+            'units' => $this->get_text_visual_units($raw_text),
+        ];
+    }
+
+    private function get_text_visual_units($text) {
+        $characters = preg_split('//u', trim((string) $text), -1, PREG_SPLIT_NO_EMPTY);
         if (!is_array($characters)) {
-            return (float) strlen((string) $title);
+            return (float) strlen((string) $text);
         }
 
         $units = 0.0;
@@ -530,6 +550,43 @@ class DNNBPC_Core {
         }
 
         return 'xlong';
+    }
+
+    private function get_subheading_bucket($word_count, $visual_units) {
+        if ($word_count <= 0 || $visual_units <= 0) {
+            return 'none';
+        }
+
+        if ($word_count <= 8 && $visual_units <= 42) {
+            return 'short';
+        }
+
+        if ($word_count <= 14 && $visual_units <= 78) {
+            return 'medium';
+        }
+
+        return 'long';
+    }
+
+    private function get_copy_density($has_shoulder, $has_subheading, $title_metrics, $subheading_metrics) {
+        if (!$has_subheading) {
+            return $has_shoulder ? 'shoulder' : 'open';
+        }
+
+        $visual_load = (float) $title_metrics['units'] + ((float) $subheading_metrics['units'] * 0.72) + ($has_shoulder ? 14 : 0);
+        if ($visual_load <= 58 && (int) $title_metrics['words'] <= 8 && (int) $subheading_metrics['words'] <= 8) {
+            return 'subheading_relaxed';
+        }
+
+        if ($visual_load <= 86) {
+            return 'subheading';
+        }
+
+        if ($visual_load <= 112) {
+            return 'subheading_dense';
+        }
+
+        return 'subheading_tight';
     }
 
     private function format_card_date($post_id, $language) {

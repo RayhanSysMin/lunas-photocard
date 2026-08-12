@@ -12,6 +12,7 @@ return [
     'date_color'   => ['type'=>'color', 'label'=>'Date Color', 'default'=>'#5f927d'],
     'shoulder_color' => ['type'=>'color', 'label'=>'Shoulder Color', 'default'=>'#111111'],
     'title_color'  => ['type'=>'color', 'label'=>'Main Title Color', 'default'=>'#e60000'],
+    'subheading_color' => ['type'=>'color', 'label'=>'Subheading Color', 'default'=>'#202020'],
     'cta_text'     => ['type'=>'text',  'label'=>'CTA Text', 'default'=>'-- বিস্তারিত কমেন্টে --'],
     'cta_color'    => ['type'=>'color', 'label'=>'CTA Color', 'default'=>'#b56565'],
   ],
@@ -118,8 +119,11 @@ return [
 .jn24-card[data-title-bucket="very_short"] .jn24-title{
   font-size:78px;line-height:1.16;font-weight:900;max-width:760px;text-wrap:balance;
 }
-.jn24-card[data-title-bucket="very_short"][data-shoulder=""] .jn24-title{
+.jn24-card[data-title-bucket="very_short"][data-shoulder=""][data-subheading=""] .jn24-title{
   margin-top:38px;
+}
+.jn24-card[data-title-bucket="very_short"][data-shoulder=""]:not([data-subheading=""]) .jn24-title{
+  margin-top:26px;
 }
 .jn24-card[data-title-bucket="balanced_short"] .jn24-title{
   font-size:74px;line-height:1.16;font-weight:900;max-width:940px;text-wrap:wrap;
@@ -139,6 +143,48 @@ return [
 .jn24-card[data-title-bucket="xlong"] .jn24-title{
   font-size:52px;line-height:1.16;max-width:960px;text-wrap:wrap;
 }
+.jn24-subheading {
+  margin:18px auto 0;color:{{opt.subheading_color}};
+  font-size:34px;line-height:1.22;font-weight:800;max-width:880px;
+  word-break:normal;overflow-wrap:break-word;text-align:center;text-wrap:balance;
+}
+.jn24-card[data-subheading=""] .jn24-subheading{display:none}
+.jn24-card[data-subheading-bucket="medium"] .jn24-subheading{
+  font-size:31px;line-height:1.2;max-width:920px;
+}
+.jn24-card[data-subheading-bucket="long"] .jn24-subheading{
+  font-size:28px;line-height:1.18;max-width:940px;margin-top:14px;
+}
+.jn24-card[data-copy-density="subheading_dense"] .jn24-subheading{
+  font-size:29px;line-height:1.16;max-width:940px;margin-top:12px;
+}
+.jn24-card[data-copy-density="subheading_tight"] .jn24-subheading{
+  font-size:25px;line-height:1.14;max-width:950px;margin-top:8px;
+}
+.jn24-card[data-copy-density="subheading_dense"][data-title-bucket="compact"] .jn24-title,
+.jn24-card[data-copy-density="subheading_dense"][data-title-bucket="very_short"] .jn24-title{
+  font-size:72px;line-height:1.12;
+}
+.jn24-card[data-copy-density="subheading_dense"][data-title-bucket="wide_short"] .jn24-title,
+.jn24-card[data-copy-density="subheading_dense"][data-title-bucket="balanced_short"] .jn24-title,
+.jn24-card[data-copy-density="subheading_dense"][data-title-bucket="short"] .jn24-title{
+  font-size:66px;line-height:1.12;
+}
+.jn24-card[data-copy-density="subheading_dense"][data-title-bucket="medium"] .jn24-title{font-size:58px;line-height:1.12}
+.jn24-card[data-copy-density="subheading_dense"][data-title-bucket="long"] .jn24-title{font-size:50px;line-height:1.12}
+.jn24-card[data-copy-density="subheading_dense"][data-title-bucket="xlong"] .jn24-title{font-size:45px;line-height:1.12}
+.jn24-card[data-copy-density="subheading_tight"] .jn24-title{
+  font-size:44px;line-height:1.1;max-width:960px;
+}
+.jn24-card[data-copy-density="subheading_tight"][data-title-bucket="compact"] .jn24-title,
+.jn24-card[data-copy-density="subheading_tight"][data-title-bucket="very_short"] .jn24-title{
+  font-size:62px;line-height:1.1;
+}
+.jn24-card[data-copy-density="subheading_tight"][data-title-bucket="wide_short"] .jn24-title,
+.jn24-card[data-copy-density="subheading_tight"][data-title-bucket="balanced_short"] .jn24-title,
+.jn24-card[data-copy-density="subheading_tight"][data-title-bucket="short"] .jn24-title{
+  font-size:58px;line-height:1.1;
+}
 .jn24-cta {
   position:absolute;left:0;right:0;bottom:0;
   color:{{opt.cta_color}};font-size:31px;font-weight:800;line-height:1.15;text-align:center;
@@ -155,9 +201,12 @@ CSS,
 <div class="jn24-card"
      data-wc="{{opt.wc}}"
      data-title-bucket="{{opt.title_bucket}}"
+     data-subheading-bucket="{{opt.subheading_bucket}}"
+     data-copy-density="{{opt.copy_density}}"
      data-logo="{{opt.logo}}"
      data-seal="{{opt.seal_icon}}"
      data-shoulder="{{shoulder}}"
+     data-subheading="{{subheading}}"
      data-cta="{{opt.cta_text}}">
   <div class="jn24-top">
     <div class="jn24-date">{{date}}</div>
@@ -183,6 +232,7 @@ CSS,
   <div class="jn24-copy">
     <div class="jn24-shoulder">{{shoulder}}</div>
     <div class="jn24-title">{{title}}</div>
+    <div class="jn24-subheading">{{subheading}}</div>
     <div class="jn24-cta">{{opt.cta_text}}</div>
   </div>
 </div>

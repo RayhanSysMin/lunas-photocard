@@ -2,8 +2,8 @@
 /**
  * Plugin Name: Luna's PhotoCard
  * Plugin URI: https://github.com/RayhanSysMin/lunas-photocard
- * Description: Generate branded 1080x1080 news photo cards from WordPress posts with templates, shoulder support, Elementor, shortcode, and browser-side export.
- * Version: 1.0.8
+ * Description: Generate branded 1080x1080 news photo cards from WordPress posts with templates, shoulder/subheading support, Elementor, shortcode, and browser-side export.
+ * Version: 1.0.9
  * Author: Rayhan Sardar
  * Author URI: https://github.com/RayhanSysMin
  * License: GPLv2 or later

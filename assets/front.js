@@ -71,6 +71,7 @@
     str = str.replace(/\{\{\s*image\s*\}\}/g, val(data.image));
     str = str.replace(/\{\{\s*site\s*\}\}/g, val(data.site));
     str = str.replace(/\{\{\s*shoulder\s*\}\}/g, val(data.shoulder || ''));
+    str = str.replace(/\{\{\s*subheading\s*\}\}/g, val(data.subheading || ''));
     str = str.replace(/\{\{\s*opt\.([a-zA-Z0-9_\-]+)\s*\}\}/g, function(_, key){
       const value = data.opts && data.opts[key] ? data.opts[key] : '';
       return val(value);
@@ -103,6 +104,63 @@
     document.body.appendChild(wrap);
 
     return {wrap:wrap, card:card || holder};
+  }
+
+  function cssNumber(el, prop){
+    return parseFloat(window.getComputedStyle(el).getPropertyValue(prop)) || 0;
+  }
+
+  function px(value){
+    return Math.round(value * 100) / 100 + 'px';
+  }
+
+  function isVisibleText(el){
+    return el && window.getComputedStyle(el).display !== 'none' && el.textContent.trim() !== '';
+  }
+
+  function fitCardCopy(card){
+    if(!card || !card.querySelector){
+      return;
+    }
+
+    const title = card.querySelector('.jn24-title');
+    const subheading = card.querySelector('.jn24-subheading');
+    const cta = card.querySelector('.jn24-cta');
+    if(!title || !cta){
+      return;
+    }
+
+    for(let i = 0; i < 10; i++){
+      const subheadingVisible = isVisibleText(subheading);
+      const lastText = subheadingVisible ? subheading : title;
+      const textBottom = lastText.getBoundingClientRect().bottom;
+      const ctaTop = cta.getBoundingClientRect().top;
+      if(ctaTop - textBottom >= 34){
+        break;
+      }
+
+      const titleSize = cssNumber(title, 'font-size');
+      const titleMargin = cssNumber(title, 'margin-top');
+      if(titleMargin > 0){
+        title.style.marginTop = px(Math.max(0, titleMargin - 6));
+      }
+      if(titleSize > 44){
+        title.style.fontSize = px(titleSize - 3);
+        title.style.lineHeight = '1.1';
+      }
+
+      if(subheadingVisible){
+        const subheadingSize = cssNumber(subheading, 'font-size');
+        const subheadingMargin = cssNumber(subheading, 'margin-top');
+        if(subheadingMargin > 6){
+          subheading.style.marginTop = px(Math.max(6, subheadingMargin - 3));
+        }
+        if(subheadingSize > 24){
+          subheading.style.fontSize = px(subheadingSize - 2);
+          subheading.style.lineHeight = '1.12';
+        }
+      }
+    }
   }
 
   function fetchViaAjax(postId){
@@ -159,7 +217,10 @@
       const built = buildFromTemplate(data);
       return waitForFonts().then(function(){
         return new Promise(function(resolve){
-          setTimeout(function(){ resolve(built); }, 160);
+          setTimeout(function(){
+            fitCardCopy(built.card);
+            resolve(built);
+          }, 160);
         });
       });
     }).then(function(built){

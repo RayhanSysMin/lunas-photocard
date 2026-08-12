@@ -4,7 +4,7 @@ Tags: news, elementor, social media, photo card, bangla
 Requires at least: 5.8
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.8
+Stable tag: 1.0.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ Generate branded 1080x1080 photo cards from posts.
 
 == Description ==
 
-Luna's PhotoCard creates social-ready news cards from WordPress posts. It supports featured images, post titles, editorial shoulders from `_editorial_shoulder`, dates, logos, template options, Elementor, and shortcode buttons.
+Luna's PhotoCard creates social-ready news cards from WordPress posts. It supports featured images, post titles, editorial shoulders from `_editorial_shoulder`, editorial subheadings from `_editorial_subheading`, dates, logos, template options, Elementor, and shortcode buttons.
 
 Project: https://github.com/RayhanSysMin/lunas-photocard
 Author: Rayhan Sardar
@@ -69,6 +69,11 @@ No. Fonts and html2canvas are bundled locally.
 
 == Changelog ==
 
+= 1.0.9 =
+* Added editorial subheading support from `_editorial_subheading`.
+* Added smart title/subheading density calculations for balanced Daily New Nation Bangla cards.
+* Added browser-side final fitting to protect the CTA area from long title and subheading combinations.
+
 = 1.0.8 =
 * Added visual-unit title calculation for smarter short Bangla headline layout.
 * Improved vertical balance for very short no-shoulder titles so one-line headlines do not sit too close to the image.
@@ -113,6 +118,9 @@ No. Fonts and html2canvas are bundled locally.
 * Reset plugin metadata, version, and author.
 
 == Upgrade Notice ==
+
+= 1.0.9 =
+Adds subheading rendering below the title with smart title/subheading fitting.
 
 = 1.0.8 =
 Improves centering and balance for very short Daily New Nation Bangla headlines.
