@@ -53,7 +53,12 @@ templates/
 
 ## Release
 
-Current version: `1.0.6`
+Current version: `1.0.7`
+
+### 1.0.7
+
+- Increased Daily New Nation Bangla headline sizing for clearer mobile and desktop viewing.
+- Tuned title buckets against the boss-approved large-title sample while keeping CTA spacing intact.
 
 ### 1.0.6
 

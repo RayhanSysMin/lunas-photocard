@@ -99,7 +99,7 @@ return [
 .jn24-card:not([data-seal=""]) .jn24-seal-fallback{display:none}
 
 .jn24-copy {
-  position:absolute;left:56px;right:56px;top:697px;bottom:50px;
+  position:absolute;left:56px;right:56px;top:682px;bottom:50px;
   display:flex;flex-direction:column;align-items:center;text-align:center;
 }
 .jn24-shoulder {
@@ -108,26 +108,30 @@ return [
 }
 .jn24-card[data-shoulder=""] .jn24-shoulder{display:none}
 .jn24-title {
-  margin:0 auto;color:{{opt.title_color}};font-size:52px;
-  line-height:1.24;font-weight:900;max-width:960px;
+  margin:0 auto;color:{{opt.title_color}};font-size:60px;
+  line-height:1.18;font-weight:900;max-width:960px;
   word-break:normal;overflow-wrap:break-word;text-align:center;
 }
-.jn24-card[data-title-bucket="short"] .jn24-title{font-size:68px}
+.jn24-card[data-title-bucket="short"] .jn24-title{
+  font-size:74px;line-height:1.16;max-width:960px;text-wrap:wrap;
+}
 .jn24-card[data-title-bucket="balanced_short"] .jn24-title{
-  font-size:64px;line-height:1.25;font-weight:900;max-width:820px;text-wrap:wrap;
+  font-size:74px;line-height:1.16;font-weight:900;max-width:940px;text-wrap:wrap;
 }
 .jn24-card[data-title-bucket="wide_short"] .jn24-title{
-  font-size:60px;line-height:1.25;font-weight:900;max-width:860px;text-wrap:wrap;
+  font-size:72px;line-height:1.16;font-weight:900;max-width:940px;text-wrap:wrap;
 }
 .jn24-card[data-title-bucket="compact"] .jn24-title{
-  font-size:62px;line-height:1.25;font-weight:800;max-width:820px;text-wrap:wrap;
+  font-size:78px;line-height:1.16;font-weight:900;max-width:940px;text-wrap:wrap;
 }
 .jn24-card[data-title-bucket="medium"] .jn24-title{
-  font-size:56px;line-height:1.26;max-width:840px;text-wrap:wrap;
+  font-size:66px;line-height:1.16;max-width:960px;text-wrap:wrap;
 }
-.jn24-card[data-title-bucket="long"] .jn24-title{font-size:50px}
+.jn24-card[data-title-bucket="long"] .jn24-title{
+  font-size:58px;line-height:1.16;max-width:960px;text-wrap:wrap;
+}
 .jn24-card[data-title-bucket="xlong"] .jn24-title{
-  font-size:46px;line-height:1.24;max-width:950px;
+  font-size:52px;line-height:1.16;max-width:960px;text-wrap:wrap;
 }
 .jn24-cta {
   position:absolute;left:0;right:0;bottom:0;
