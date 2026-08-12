@@ -54,7 +54,12 @@ templates/
 
 ## Release
 
-Current version: `1.0.9`
+Current version: `1.0.10`
+
+### 1.0.10
+
+- Added math-based browser fitting that measures available space and scales the title/subheading group when needed.
+- Improved vertical centering between the featured image and CTA so title, shoulder, and subheading blocks keep balanced breathing room.
 
 ### 1.0.9
 

@@ -4,7 +4,7 @@ Tags: news, elementor, social media, photo card, bangla
 Requires at least: 5.8
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.9
+Stable tag: 1.0.10
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +69,10 @@ No. Fonts and html2canvas are bundled locally.
 
 == Changelog ==
 
+= 1.0.10 =
+* Added math-based browser fitting that measures available space and scales the title/subheading group when needed.
+* Improved vertical centering between the featured image and CTA so title, shoulder, and subheading blocks keep balanced breathing room.
+
 = 1.0.9 =
 * Added editorial subheading support from `_editorial_subheading`.
 * Added smart title/subheading density calculations for balanced Daily New Nation Bangla cards.
@@ -118,6 +122,9 @@ No. Fonts and html2canvas are bundled locally.
 * Reset plugin metadata, version, and author.
 
 == Upgrade Notice ==
+
+= 1.0.10 =
+Improves title/subheading font scaling and vertical centering in the available space below the featured image.
 
 = 1.0.9 =
 Adds subheading rendering below the title with smart title/subheading fitting.

@@ -114,8 +114,38 @@
     return Math.round(value * 100) / 100 + 'px';
   }
 
+  function clamp(value, min, max){
+    return Math.max(min, Math.min(max, value));
+  }
+
   function isVisibleText(el){
     return el && window.getComputedStyle(el).display !== 'none' && el.textContent.trim() !== '';
+  }
+
+  function scalePx(el, prop, scale, minValue, maxValue){
+    if(!el){
+      return;
+    }
+
+    const current = cssNumber(el, prop);
+    if(current <= 0){
+      return;
+    }
+
+    const max = typeof maxValue === 'number' ? maxValue : current;
+    const next = Math.max(minValue, Math.min(max, current * scale));
+    const styleProp = prop.replace(/-([a-z])/g, function(_, letter){
+      return letter.toUpperCase();
+    });
+    el.style[styleProp] = px(next);
+  }
+
+  function getFitScale(currentHeight, targetHeight, minScale){
+    if(currentHeight <= 0 || targetHeight <= 0){
+      return 1;
+    }
+
+    return clamp(targetHeight / currentHeight, minScale, 1);
   }
 
   function fitCardCopy(card){
@@ -123,44 +153,89 @@
       return;
     }
 
+    const copy = card.querySelector('.jn24-copy');
+    const hero = card.querySelector('.jn24-hero');
     const title = card.querySelector('.jn24-title');
     const subheading = card.querySelector('.jn24-subheading');
     const cta = card.querySelector('.jn24-cta');
-    if(!title || !cta){
+    if(!copy || !hero || !title || !cta){
       return;
     }
 
-    for(let i = 0; i < 10; i++){
-      const subheadingVisible = isVisibleText(subheading);
-      const lastText = subheadingVisible ? subheading : title;
-      const textBottom = lastText.getBoundingClientRect().bottom;
-      const ctaTop = cta.getBoundingClientRect().top;
-      if(ctaTop - textBottom >= 34){
-        break;
+    const shoulder = card.querySelector('.jn24-shoulder');
+    const minGapFromHero = 52;
+    const minGapToCta = 52;
+
+    function getTextMetrics(){
+      const visibleBlocks = [shoulder, title, subheading].filter(isVisibleText);
+      if(!visibleBlocks.length){
+        return null;
       }
 
-      const titleSize = cssNumber(title, 'font-size');
-      const titleMargin = cssNumber(title, 'margin-top');
-      if(titleMargin > 0){
-        title.style.marginTop = px(Math.max(0, titleMargin - 6));
-      }
-      if(titleSize > 44){
-        title.style.fontSize = px(titleSize - 3);
-        title.style.lineHeight = '1.1';
+      const firstBox = visibleBlocks[0].getBoundingClientRect();
+      const lastBox = visibleBlocks[visibleBlocks.length - 1].getBoundingClientRect();
+      const heroBottom = hero.getBoundingClientRect().bottom;
+      const ctaTop = cta.getBoundingClientRect().top;
+      const availableTop = heroBottom + minGapFromHero;
+      const availableBottom = ctaTop - minGapToCta;
+
+      return {
+        firstBox: firstBox,
+        lastBox: lastBox,
+        ctaTop: ctaTop,
+        availableTop: availableTop,
+        availableBottom: availableBottom,
+        availableHeight: Math.max(0, availableBottom - availableTop),
+        textHeight: lastBox.bottom - firstBox.top,
+        bottomGap: ctaTop - lastBox.bottom
+      };
+    }
+
+    function scaleTextGroup(scale){
+      const subheadingVisible = isVisibleText(subheading);
+      const shoulderVisible = isVisibleText(shoulder);
+
+      scalePx(title, 'font-size', scale, 44);
+      scalePx(title, 'margin-top', scale, 0);
+      title.style.lineHeight = scale < 1 ? '1.1' : title.style.lineHeight;
+
+      if(shoulderVisible){
+        scalePx(shoulder, 'font-size', scale, 34);
+        scalePx(shoulder, 'margin-bottom', scale, 8);
+        shoulder.style.lineHeight = scale < 1 ? '1.1' : shoulder.style.lineHeight;
       }
 
       if(subheadingVisible){
-        const subheadingSize = cssNumber(subheading, 'font-size');
-        const subheadingMargin = cssNumber(subheading, 'margin-top');
-        if(subheadingMargin > 6){
-          subheading.style.marginTop = px(Math.max(6, subheadingMargin - 3));
-        }
-        if(subheadingSize > 24){
-          subheading.style.fontSize = px(subheadingSize - 2);
-          subheading.style.lineHeight = '1.12';
-        }
+        scalePx(subheading, 'font-size', scale, 24);
+        scalePx(subheading, 'margin-top', scale, 6);
+        subheading.style.lineHeight = scale < 1 ? '1.12' : subheading.style.lineHeight;
       }
     }
+
+    let metrics = getTextMetrics();
+    if(!metrics){
+      return;
+    }
+
+    if(metrics.availableHeight > 0 && metrics.textHeight > metrics.availableHeight){
+      const scale = getFitScale(metrics.textHeight, metrics.availableHeight, 0.78);
+      scaleTextGroup(scale);
+    }
+
+    metrics = getTextMetrics();
+    if(metrics && metrics.bottomGap < minGapToCta){
+      const targetHeight = metrics.textHeight - (minGapToCta - metrics.bottomGap);
+      const scale = getFitScale(metrics.textHeight, targetHeight, 0.86);
+      scaleTextGroup(scale);
+    }
+
+    metrics = getTextMetrics();
+    if(!metrics || metrics.availableHeight <= 0){
+      return;
+    }
+
+    const balancedTop = metrics.availableTop + (Math.max(0, metrics.availableHeight - metrics.textHeight) / 2);
+    copy.style.top = px(cssNumber(copy, 'top') + balancedTop - metrics.firstBox.top);
   }
 
   function fetchViaAjax(postId){
