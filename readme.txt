@@ -4,7 +4,7 @@ Tags: news, elementor, social media, photo card, bangla
 Requires at least: 5.8
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.10
+Stable tag: 1.0.11
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,10 +23,10 @@ Author: Rayhan Sardar
 * Editable HTML/CSS template files
 * Editorial shoulder support from `_editorial_shoulder`
 * Frontend export through bundled html2canvas
-* Elementor widget
-* `[daily_new_nation_bangla_photocard_button]` shortcode
+* Editor/Admin-only Elementor widget
+* Editor/Admin-only `[daily_new_nation_bangla_photocard_button]` shortcode
 * Local font and script assets
-* REST endpoint with AJAX fallback
+* Editor/Admin-only REST endpoint with AJAX fallback
 * Bangla or English date rendering
 
 == Installation ==
@@ -40,6 +40,7 @@ Author: Rayhan Sardar
 
 Automatic button:
 Enable the auto button to add a PhotoCard download button to single posts with featured images.
+The button only renders for users with Editor-level access or higher.
 
 Shortcode:
 
@@ -68,6 +69,10 @@ Images render in the browser and download directly. Nothing is uploaded to the s
 No. Fonts and html2canvas are bundled locally.
 
 == Changelog ==
+
+= 1.0.11 =
+* Restricted PhotoCard download buttons to Editor-level users and above.
+* Locked card data generation behind the same capability for REST, AJAX, shortcode, and Elementor paths.
 
 = 1.0.10 =
 * Added math-based browser fitting that measures available space and scales the title/subheading group when needed.
@@ -122,6 +127,9 @@ No. Fonts and html2canvas are bundled locally.
 * Reset plugin metadata, version, and author.
 
 == Upgrade Notice ==
+
+= 1.0.11 =
+Download buttons and card generation are now visible/available only to users with Editor-level access or higher.
 
 = 1.0.10 =
 Improves title/subheading font scaling and vertical centering in the available space below the featured image.

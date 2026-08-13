@@ -76,6 +76,10 @@ class DNNBPC_Elementor_Widget extends Widget_Base {
     }
 
     protected function render() {
+        if (!DNNBPC_Core::current_user_can_generate()) {
+            return;
+        }
+
         $settings = $this->get_settings_for_display();
         $text = !empty($settings['button_text']) ? $settings['button_text'] : __("Download Luna's PhotoCard (1080x1080)", 'daily-new-nation-bangla-photocard');
         $post_id = get_the_ID();

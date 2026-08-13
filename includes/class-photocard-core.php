@@ -4,11 +4,12 @@ if (!defined('ABSPATH')) {
 }
 
 class DNNBPC_Core {
-    const VERSION        = '1.0.10';
-    const OPT_CORE       = 'dnnbpc_core_v1';
-    const OPT_PREFIX     = 'dnnbpc_tpl_opts_v1_';
-    const MENU_SLUG      = 'daily-new-nation-bangla-photocard';
-    const REST_NAMESPACE = 'daily-new-nation-bangla/v1';
+    const VERSION             = '1.0.11';
+    const OPT_CORE            = 'dnnbpc_core_v1';
+    const OPT_PREFIX          = 'dnnbpc_tpl_opts_v1_';
+    const MENU_SLUG           = 'daily-new-nation-bangla-photocard';
+    const REST_NAMESPACE      = 'daily-new-nation-bangla/v1';
+    const GENERATE_CAPABILITY = 'edit_others_posts';
 
     private $templates = null;
 
@@ -22,8 +23,11 @@ class DNNBPC_Core {
         add_shortcode('daily_new_nation_bangla_photocard_button', [$this, 'shortcode_button']);
 
         add_action('wp_ajax_dnnbpc_get_card', [$this, 'ajax_get_card_data']);
-        add_action('wp_ajax_nopriv_dnnbpc_get_card', [$this, 'ajax_get_card_data']);
         add_action('wp_ajax_dnnbpc_get_saved_options', [$this, 'ajax_get_saved_options']);
+    }
+
+    public static function current_user_can_generate() {
+        return current_user_can(self::GENERATE_CAPABILITY);
     }
 
     public function templates_dir() {
@@ -279,6 +283,10 @@ class DNNBPC_Core {
             return;
         }
 
+        if (!self::current_user_can_generate()) {
+            return;
+        }
+
         $post_id = get_queried_object_id();
         if (!$post_id || !has_post_thumbnail($post_id)) {
             return;
@@ -310,6 +318,10 @@ class DNNBPC_Core {
             return $content;
         }
 
+        if (!self::current_user_can_generate()) {
+            return $content;
+        }
+
         $core = $this->get_core();
         if ($core['show_button'] !== '1') {
             return $content;
@@ -322,6 +334,10 @@ class DNNBPC_Core {
     }
 
     public function shortcode_button($atts = [], $content = '') {
+        if (!self::current_user_can_generate()) {
+            return '';
+        }
+
         $atts = shortcode_atts(['text' => ''], $atts, 'daily_new_nation_bangla_photocard_button');
         $post_id = get_the_ID();
         if (!$post_id || !has_post_thumbnail($post_id)) {
@@ -333,6 +349,10 @@ class DNNBPC_Core {
     }
 
     public static function button_html($post_id, $text, $inner_html = '') {
+        if (!self::current_user_can_generate()) {
+            return '';
+        }
+
         $label = $inner_html ? $inner_html : esc_html($text);
 
         return sprintf(
@@ -346,7 +366,7 @@ class DNNBPC_Core {
         register_rest_route(self::REST_NAMESPACE, '/card', [
             'methods'             => WP_REST_Server::READABLE,
             'callback'            => [$this, 'rest_get_card_data'],
-            'permission_callback' => '__return_true',
+            'permission_callback' => [$this, 'rest_can_generate_card'],
             'args'                => [
                 'post_id' => [
                     'description'       => __('Post ID to render as a photo card.', 'daily-new-nation-bangla-photocard'),
@@ -362,6 +382,18 @@ class DNNBPC_Core {
         ]);
     }
 
+    public function rest_can_generate_card() {
+        if (self::current_user_can_generate()) {
+            return true;
+        }
+
+        return new WP_Error(
+            'dnnbpc_forbidden',
+            __('You do not have permission to generate photo cards.', 'daily-new-nation-bangla-photocard'),
+            ['status' => 403]
+        );
+    }
+
     public function rest_get_card_data(WP_REST_Request $request) {
         $data = $this->prepare_card_data(absint($request->get_param('post_id')));
         if (is_wp_error($data)) {
@@ -372,6 +404,10 @@ class DNNBPC_Core {
     }
 
     public function ajax_get_card_data() {
+        if (!self::current_user_can_generate()) {
+            wp_send_json_error(['message' => __('Forbidden.', 'daily-new-nation-bangla-photocard')], 403);
+        }
+
         check_ajax_referer('dnnbpc_card', 'nonce');
 
         $post_id = isset($_POST['post_id']) ? absint(wp_unslash($_POST['post_id'])) : 0;
@@ -387,6 +423,10 @@ class DNNBPC_Core {
     }
 
     private function prepare_card_data($post_id) {
+        if (!self::current_user_can_generate()) {
+            return new WP_Error('dnnbpc_forbidden', __('You do not have permission to generate photo cards.', 'daily-new-nation-bangla-photocard'), ['status' => 403]);
+        }
+
         if (!$post_id) {
             return new WP_Error('dnnbpc_invalid_post', __('Invalid post id.', 'daily-new-nation-bangla-photocard'), ['status' => 400]);
         }

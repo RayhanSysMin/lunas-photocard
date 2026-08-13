@@ -15,9 +15,9 @@ Author profile: https://github.com/RayhanSysMin
 - Editorial subheading reads from `_editorial_subheading`.
 - Bangla or English date rendering.
 - Template options for logo, seal, colors, and CTA text.
-- Shortcode button: `[daily_new_nation_bangla_photocard_button]`.
-- Elementor widget support.
-- REST endpoint with AJAX fallback.
+- Editor/Admin-only shortcode button: `[daily_new_nation_bangla_photocard_button]`.
+- Editor/Admin-only Elementor widget support.
+- Editor/Admin-only REST endpoint with AJAX fallback.
 - Bundled local assets and font files.
 
 ## Installation
@@ -32,7 +32,7 @@ Author profile: https://github.com/RayhanSysMin
 
 Automatic button:
 
-Enable the auto button in settings to add the download button to single posts with featured images.
+Enable the auto button in settings to add the download button to single posts with featured images. The button only renders for users with Editor-level access or higher.
 
 Shortcode:
 
@@ -54,7 +54,12 @@ templates/
 
 ## Release
 
-Current version: `1.0.10`
+Current version: `1.0.11`
+
+### 1.0.11
+
+- Restricted PhotoCard download buttons to Editor-level users and above.
+- Locked card data generation behind the same capability for REST, AJAX, shortcode, and Elementor paths.
 
 ### 1.0.10
 
