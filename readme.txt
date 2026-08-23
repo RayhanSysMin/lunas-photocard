@@ -4,7 +4,7 @@ Tags: news, elementor, social media, photo card, bangla
 Requires at least: 5.8
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.14
+Stable tag: 1.0.15
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +69,10 @@ Images render in the browser and download directly. Nothing is uploaded to the s
 No. Fonts and html2canvas are bundled locally.
 
 == Changelog ==
+
+= 1.0.15 =
+* Made the blurred hero fill more vivid for stronger Facebook feed impact.
+* Reduced the final white wash and added deeper contrast so background fill keeps color instead of looking faded.
 
 = 1.0.14 =
 * Restored richer color and contrast in the blurred hero fill while keeping the stronger blur.
@@ -139,6 +143,9 @@ No. Fonts and html2canvas are bundled locally.
 * Reset plugin metadata, version, and author.
 
 == Upgrade Notice ==
+
+= 1.0.15 =
+Makes the hero side-fill background more vivid and attention-grabbing without bringing back squeezed images.
 
 = 1.0.14 =
 Improves the hero side-fill blend so the blurred background keeps color and depth instead of looking faded.

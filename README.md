@@ -54,7 +54,12 @@ templates/
 
 ## Release
 
-Current version: `1.0.14`
+Current version: `1.0.15`
+
+### 1.0.15
+
+- Made the blurred hero fill more vivid for stronger Facebook feed impact.
+- Reduced the final white wash and added deeper contrast so background fill keeps color instead of looking faded.
 
 ### 1.0.14
 

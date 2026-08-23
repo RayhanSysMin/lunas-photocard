@@ -74,13 +74,13 @@ return [
 .jn24-hero::before {
   content:"";position:absolute;inset:-96px;z-index:0;
   background-image:inherit;background-size:cover;background-position:center;background-repeat:no-repeat;
-  filter:blur(92px) saturate(.82) brightness(.92) contrast(1.04);transform:scale(1.38);opacity:.74;
-  box-shadow:inset 0 0 0 999px rgba(255,250,250,.28);
+  filter:blur(82px) saturate(1.9) brightness(1.06) contrast(1.24);transform:scale(1.42);opacity:1;
+  box-shadow:inset 0 0 0 999px rgba(255,250,250,.01);
 }
 .jn24-hero::after {
   content:"";position:absolute;inset:0;z-index:1;
   background-image:inherit;background-size:contain;background-position:center;background-repeat:no-repeat;
-  filter:drop-shadow(0 0 18px rgba(255,250,250,.52)) drop-shadow(0 0 34px rgba(255,250,250,.24));
+  filter:drop-shadow(0 0 16px rgba(255,250,250,.4)) drop-shadow(0 0 28px rgba(0,0,0,.08));
 }
 .jn24-hero img {
   display:none;
