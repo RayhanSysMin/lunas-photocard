@@ -54,7 +54,12 @@ templates/
 
 ## Release
 
-Current version: `1.0.13`
+Current version: `1.0.14`
+
+### 1.0.14
+
+- Restored richer color and contrast in the blurred hero fill while keeping the stronger blur.
+- Reduced the white tint and softened the edge halo so the background blends without looking washed out.
 
 ### 1.0.13
 
