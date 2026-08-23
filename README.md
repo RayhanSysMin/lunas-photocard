@@ -54,7 +54,12 @@ templates/
 
 ## Release
 
-Current version: `1.0.15`
+Current version: `1.0.16`
+
+### 1.0.16
+
+- Rebalanced the hero side-fill from punchy to cinematic so it looks cleaner in the Facebook feed.
+- Darkened and softened the blurred ambient background to keep the main photo sharp without faded or neon side bars.
 
 ### 1.0.15
 

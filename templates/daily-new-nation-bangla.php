@@ -73,14 +73,15 @@ return [
 }
 .jn24-hero::before {
   content:"";position:absolute;inset:-96px;z-index:0;
-  background-image:inherit;background-size:cover;background-position:center;background-repeat:no-repeat;
-  filter:blur(82px) saturate(1.9) brightness(1.06) contrast(1.24);transform:scale(1.42);opacity:1;
-  box-shadow:inset 0 0 0 999px rgba(255,250,250,.01);
+  background-image:linear-gradient(90deg,rgba(0,0,0,.24),rgba(0,0,0,.08) 26%,rgba(0,0,0,.08) 74%,rgba(0,0,0,.24)),url({{image}});
+  background-size:100% 100%,cover;background-position:center;background-repeat:no-repeat;
+  filter:blur(116px) saturate(1.08) brightness(.76) contrast(1.32);transform:scale(1.5);opacity:.88;
+  box-shadow:inset 0 0 0 999px rgba(255,250,250,.04);
 }
 .jn24-hero::after {
   content:"";position:absolute;inset:0;z-index:1;
   background-image:inherit;background-size:contain;background-position:center;background-repeat:no-repeat;
-  filter:drop-shadow(0 0 16px rgba(255,250,250,.4)) drop-shadow(0 0 28px rgba(0,0,0,.08));
+  filter:drop-shadow(0 0 18px rgba(255,250,250,.5)) drop-shadow(0 0 30px rgba(0,0,0,.14));
 }
 .jn24-hero img {
   display:none;
