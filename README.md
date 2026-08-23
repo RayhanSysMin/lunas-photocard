@@ -54,7 +54,12 @@ templates/
 
 ## Release
 
-Current version: `1.0.11`
+Current version: `1.0.12`
+
+### 1.0.12
+
+- Increased the Daily New Nation Bangla hero fill blur so portrait/narrow featured images keep the main photo in focus.
+- Softened the blurred background layer with lower opacity and calmer saturation/brightness.
 
 ### 1.0.11
 

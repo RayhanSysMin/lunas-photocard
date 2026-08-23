@@ -72,9 +72,10 @@ return [
   background-size:cover;background-position:center;background-repeat:no-repeat;
 }
 .jn24-hero::before {
-  content:"";position:absolute;inset:-18px;z-index:0;
+  content:"";position:absolute;inset:-60px;z-index:0;
   background-image:inherit;background-size:cover;background-position:center;background-repeat:no-repeat;
-  filter:blur(14px);transform:scale(1.04);opacity:.55;
+  filter:blur(52px) saturate(.58) brightness(.84);transform:scale(1.2);opacity:.62;
+  box-shadow:inset 0 0 0 999px rgba(255,250,250,.44);
 }
 .jn24-hero::after {
   content:"";position:absolute;inset:0;z-index:1;

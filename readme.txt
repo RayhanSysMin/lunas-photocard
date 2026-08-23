@@ -4,7 +4,7 @@ Tags: news, elementor, social media, photo card, bangla
 Requires at least: 5.8
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.11
+Stable tag: 1.0.12
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -70,6 +70,10 @@ No. Fonts and html2canvas are bundled locally.
 
 == Changelog ==
 
+= 1.0.12 =
+* Increased the Daily New Nation Bangla hero fill blur so portrait/narrow featured images keep the main photo in focus.
+* Softened the blurred background layer with lower opacity and calmer saturation/brightness.
+
 = 1.0.11 =
 * Restricted PhotoCard download buttons to Editor-level users and above.
 * Locked card data generation behind the same capability for REST, AJAX, shortcode, and Elementor paths.
@@ -127,6 +131,9 @@ No. Fonts and html2canvas are bundled locally.
 * Reset plugin metadata, version, and author.
 
 == Upgrade Notice ==
+
+= 1.0.12 =
+Improves focus for portrait/narrow featured images by making the background fill softer and more blurred.
 
 = 1.0.11 =
 Download buttons and card generation are now visible/available only to users with Editor-level access or higher.
