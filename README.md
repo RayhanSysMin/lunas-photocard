@@ -54,7 +54,12 @@ templates/
 
 ## Release
 
-Current version: `1.0.16`
+Current version: `1.0.17`
+
+### 1.0.17
+
+- Removed the image-derived blurred hero background entirely.
+- Switched the hero to a clean full-cover photo crop so cards have no faded/ugly side-fill and no squeezed image rendering.
 
 ### 1.0.16
 

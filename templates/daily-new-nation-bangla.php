@@ -67,21 +67,18 @@ return [
 
 .jn24-hero {
   position:absolute;left:60px;top:160px;width:960px;height:500px;
-  overflow:hidden;background:#f0f0f0;
+  overflow:hidden;background:#fffafa;
   background-image:url({{image}});
   background-size:cover;background-position:center;background-repeat:no-repeat;
 }
 .jn24-hero::before {
-  content:"";position:absolute;inset:-96px;z-index:0;
-  background-image:linear-gradient(90deg,rgba(0,0,0,.24),rgba(0,0,0,.08) 26%,rgba(0,0,0,.08) 74%,rgba(0,0,0,.24)),url({{image}});
-  background-size:100% 100%,cover;background-position:center;background-repeat:no-repeat;
-  filter:blur(116px) saturate(1.08) brightness(.76) contrast(1.32);transform:scale(1.5);opacity:.88;
-  box-shadow:inset 0 0 0 999px rgba(255,250,250,.04);
+  content:"";position:absolute;inset:0;z-index:0;
+  background:#fffafa;
 }
 .jn24-hero::after {
   content:"";position:absolute;inset:0;z-index:1;
-  background-image:inherit;background-size:contain;background-position:center;background-repeat:no-repeat;
-  filter:drop-shadow(0 0 18px rgba(255,250,250,.5)) drop-shadow(0 0 30px rgba(0,0,0,.14));
+  background-image:inherit;background-size:cover;background-position:center;background-repeat:no-repeat;
+  filter:none;
 }
 .jn24-hero img {
   display:none;
