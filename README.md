@@ -54,7 +54,12 @@ templates/
 
 ## Release
 
-Current version: `1.0.12`
+Current version: `1.0.13`
+
+### 1.0.13
+
+- Increased the blurred fill strength again for portrait/narrow featured images.
+- Added edge blending over the hero area so side-fill bands fade softer into the main photo.
 
 ### 1.0.12
 

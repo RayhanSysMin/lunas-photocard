@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
 }
 
 class DNNBPC_Core {
-    const VERSION             = '1.0.12';
+    const VERSION             = '1.0.13';
     const OPT_CORE            = 'dnnbpc_core_v1';
     const OPT_PREFIX          = 'dnnbpc_tpl_opts_v1_';
     const MENU_SLUG           = 'daily-new-nation-bangla-photocard';

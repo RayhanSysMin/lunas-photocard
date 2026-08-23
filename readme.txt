@@ -4,7 +4,7 @@ Tags: news, elementor, social media, photo card, bangla
 Requires at least: 5.8
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.12
+Stable tag: 1.0.13
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -70,6 +70,10 @@ No. Fonts and html2canvas are bundled locally.
 
 == Changelog ==
 
+= 1.0.13 =
+* Increased the blurred fill strength again for portrait/narrow featured images.
+* Added edge blending over the hero area so side-fill bands fade softer into the main photo.
+
 = 1.0.12 =
 * Increased the Daily New Nation Bangla hero fill blur so portrait/narrow featured images keep the main photo in focus.
 * Softened the blurred background layer with lower opacity and calmer saturation/brightness.
@@ -131,6 +135,9 @@ No. Fonts and html2canvas are bundled locally.
 * Reset plugin metadata, version, and author.
 
 == Upgrade Notice ==
+
+= 1.0.13 =
+Further softens and blends the hero side-fill background for stronger focus on the main image.
 
 = 1.0.12 =
 Improves focus for portrait/narrow featured images by making the background fill softer and more blurred.

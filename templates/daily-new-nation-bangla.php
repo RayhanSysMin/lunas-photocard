@@ -72,14 +72,15 @@ return [
   background-size:cover;background-position:center;background-repeat:no-repeat;
 }
 .jn24-hero::before {
-  content:"";position:absolute;inset:-60px;z-index:0;
+  content:"";position:absolute;inset:-96px;z-index:0;
   background-image:inherit;background-size:cover;background-position:center;background-repeat:no-repeat;
-  filter:blur(52px) saturate(.58) brightness(.84);transform:scale(1.2);opacity:.62;
-  box-shadow:inset 0 0 0 999px rgba(255,250,250,.44);
+  filter:blur(92px) saturate(.42) brightness(.74);transform:scale(1.38);opacity:.68;
+  box-shadow:inset 0 0 0 999px rgba(255,250,250,.62);
 }
 .jn24-hero::after {
   content:"";position:absolute;inset:0;z-index:1;
   background-image:inherit;background-size:contain;background-position:center;background-repeat:no-repeat;
+  filter:drop-shadow(0 0 26px rgba(255,250,250,.86));
 }
 .jn24-hero img {
   display:none;
